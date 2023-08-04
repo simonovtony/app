@@ -56,6 +56,8 @@ const Dialog = styled.div<any>`
   width: ${({ width }) => width ?? '430px'};
   height: ${({ height }) => height ?? '481px'};
   animation: ${({ isOpen }) => isOpen ? animationShow : animationHide} 2s normal forwards;
+  transition: .5s width;
+  transition: .5s height;
 
   top: 500px;
 
@@ -65,10 +67,12 @@ const Dialog = styled.div<any>`
 
   ${({ isMobileFullScreen }) => isMobileFullScreen && css`
     height: 100%;
+    transition: .5s width;
   `}
 
   @media all and (max-width: 768px) {
     width: 100%;  
+    transition: .5s width;
   }
 `;
 
