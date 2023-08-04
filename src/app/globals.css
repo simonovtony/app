@@ -1,0 +1,19 @@
+
+@font-face {
+  font-family: "Roboto";
+  src: url("/fonts/Roboto-Regular.ttf") format("TrueType");
+}
+
+@font-face {
+  font-family: "Helvetica Neue";
+  src: url("/fonts/Helvetica-Neue-Regular.ttf") format("TrueType");
+}
+
+* { 
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
