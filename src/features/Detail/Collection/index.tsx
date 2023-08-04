@@ -44,11 +44,9 @@ export const Collection: FC<CollectionsProps> = ({
     onSave(values);
   }, [values, onSave]);
 
-  console.log(values);
 
   const handleCollectionClick = useCallback((selectedValue: string) => () => {
     const index = values.findIndex(item => selectedValue === item);
-    console.log(index);
     if (index !== -1) {
       const newValues: string[] = values.filter((_, i) => i !== index);
       setValues(newValues);
@@ -68,6 +66,7 @@ export const Collection: FC<CollectionsProps> = ({
       opacity='0.5'
       isMobileFullScreen
       isMobileOpacity
+      isBackground
     >
       <Box 
         position="relative" 

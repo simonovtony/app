@@ -1,4 +1,4 @@
-import { FC, useState, useCallback, ChangeEvent, KeyboardEvent, useContext } from 'react';
+import { FC, useState, useCallback, ChangeEvent, KeyboardEvent, useContext, useEffect } from 'react';
 import { DefaultProps } from "@/types/interfaces";
 import Box from '@/components/Box';
 import Modal from '@/components/Modal';
@@ -13,6 +13,7 @@ import { styled } from 'styled-components';
 import { useIsMobile } from '@/hooks';
 import { Description } from './Description';
 import { Collection } from './Collection';
+import axios from 'axios';
 
 export interface DetailProps extends DefaultProps {
   isOpen?: boolean;
@@ -104,15 +105,6 @@ const AddGleanWrapper = styled.div`
   }
 `;
 
-const defaultDescriptionValue = 'This is where a detailed scraped description would appear in a glean or collection. If it gets too long, it will start to fade out so that editors can think free and edit the text if needed.';
-const defaultCollections: string[] = [
-  'Test',
-  'Detailed',
-  'Dance',
-  'Design',
-  'UX',
-];
-
 const Detail: FC<DetailProps> = ({
   isOpen,
 }) => {
@@ -121,9 +113,24 @@ const Detail: FC<DetailProps> = ({
   } = useContext(Store);
 
   const [isDescriptionOpen, setisDescriptionOpen] = useState<boolean>(false);
-  const [description, setDescription] = useState<string>(defaultDescriptionValue);
+  const [description, setDescription] = useState<string>('');
   const [isCollection, setisCollection] = useState<boolean>(false);
-  const [collections, setCollections] = useState<string[]>(defaultCollections);
+  const [collections, setCollections] = useState<string[]>([]);
+
+  useEffect(() => {
+    const handler = async () => {
+      const response = await axios.get('/api/data');
+      const {
+        data: {
+          description: newDescription,
+          collections: newCollections,
+        }
+      } = response;
+      setDescription(newDescription);
+      setCollections(newCollections);
+    };
+    handler();
+  }, []);
 
   const handleButtonBackClick = useCallback(() => {
     setStep(Steps.Content);
